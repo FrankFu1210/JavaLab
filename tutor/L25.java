@@ -46,4 +46,9 @@ public class L25 extends JFrame{
 	}
 }		
 
+//長度固定 -> 資料結構
+//小朋友畫資料結構 點點變成線 -> Hello Kitty
+//遊戲開發物理引擎 JAVA遊戲引擎 
+//遊戲更新畫面 渲染 重刷
+//<E>泛型
 

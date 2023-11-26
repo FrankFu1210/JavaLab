@@ -34,3 +34,11 @@ public class L30 {
 		}
 	}
 }
+//Iterable<E>迭代
+//可存放資料結構的定義，全部物件，不能放基本型別
+//但有另一個機制，可以將基本型別變成物件
+
+//介面java.util -> collection -> set 跟 list
+//set: 元素不重複，無順序性，實作可迭代->for each ( : 尋訪的對象)
+//list:可重複，有順序性index，實作可迭代->for each( : 尋訪的對象)
+//PHP陣列好用
