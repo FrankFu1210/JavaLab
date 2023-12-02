@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-//from L63 & JDBC02
+//將open data資料抓回資料庫表單中，農委會open data到資料庫: cool 資料表： food (from L63 & JDBC02)
 public class JDBC04 {
 	
 	public static void main(String[] args) {
