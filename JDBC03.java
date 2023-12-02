@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-//修改No.3名字 刪除No.2
+//修改資料庫: cool 資料表： cust，No.3名字 刪除No.2
 public class JDBC03 {
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class JDBC03 {
 				
 				pstmt.executeUpdate();
 				System.out.println("OK");
-				
+				//-----------------------------------------------
 				int id2 = 2;
 				String sql2 = "DELETE FROM cust WHERE id = ?";
 				PreparedStatement pstmt2 = conn.prepareStatement(sql2);

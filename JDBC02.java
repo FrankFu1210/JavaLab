@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-//增加庫的表單
+//增加庫的表單 資料庫: cool 資料表： cust
 public class JDBC02 {
 
 	public static void main(String[] args) {

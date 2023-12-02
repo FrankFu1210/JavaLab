@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-//資料庫連線
+//JDBC(Java Database Connectivity)，Java資料庫連線 DriverManager
 public class JDBC01 {
 
 	public static void main(String[] args) {

@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class JDBC04 {
 	
 	public static void main(String[] args) {
-		
+		//L63
 		try {
 			URL url = new URL("https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvTravelFood.aspx");
 			URLConnection conn = url.openConnection();
@@ -40,32 +40,75 @@ public class JDBC04 {
 			System.out.println(e);
 		}
 	}
-	
-
+		//JDBC02
 		static void parseJSON(String json) {
 			Properties prop = new Properties();
 			prop.put("user", "root");
 			prop.put("password", "root");
-			//預先準備SQL語法
 			try (Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/cool",prop);){
+			
+			String sql2 = """
+							DELETE FROM food;
+							""";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);	
+			pstmt2.executeUpdate();
+			System.out.println("OK");
+			
+			String sql3 = """
+							ALTER TABLE food AUTO_INCREMENT=1;
+							""";
+			PreparedStatement pstmt3 = conn.prepareStatement(sql3);	
+			pstmt3.executeUpdate();
+			System.out.println("OK");
 				
-				//隱碼攻擊在變數上面 直接寫?，變數用字串組合起來%brad%變字串塞到?裡 (不是?%)
-				String name = "Brad";
-				String tel = "123";
-				String birthday = "1999-01-01";
-				String sql = "INSERT INTO cust (cname,tel,birthday) VALUE (?,?,?)";
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				//型別由這邊決定，字串第幾個? JAVA.SQL系列Index從1開始
-				pstmt.setString(1, name);//用這邊過濾隱碼攻擊(Statement變成PreparedStatement)
-				pstmt.setString(2, tel);
-				pstmt.setString(3, birthday);
 				
+			String sql = """
+							INSERT INTO food (name, addr, tel, pic, lat, lng) VALUES (?,?,?,?,?,?)
+					
+							""";
+//	// //				ALTER TABLE food AUTO_INCREMENT=1
+						
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			JSONArray root = new JSONArray(json);//[]
+			for (Object row : root) {//{}
+				JSONObject data = (JSONObject)row;//{裡面的data}
+				String name = data.getString("Name");
+				String addr = data.getString("Address");
+				String tel = data.getString("Tel");
+				String pic = data.getString("PicURL");
+				String lat = data.getString("Latitude");
+				String lng = data.getString("Longitude");
+				System.out.println(name);
+				
+				pstmt.setString(1, name);
+				pstmt.setString(2, addr);
+				pstmt.setString(3, tel);
+				pstmt.setString(4, pic);
+				try {
+					pstmt.setDouble(5, Double.parseDouble(lat));
+					pstmt.setDouble(6, Double.parseDouble(lng));					
+				} catch (Exception e) {
+					pstmt.setDouble(5, 0.0);
+					pstmt.setDouble(6, 0.0);
+				}
 				pstmt.executeUpdate();
+				
+			}
+				
 				System.out.println("OK");
 				
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				System.out.println(e);
 			}
 		}
 }
+// [MySQL]如何設定歸零自動編號
+// 由於auto_increment ，在刪除資料列後的id會累加
+// 1.在MyAdmin用truncate table food; 可以將MySql 自動遞增歸零
+// 2.刪除資料DELETE FROM food; 然後輸入ALTER TABLE food AUTO_INCREMENT=1;
+// https://maxine-divinglife.medium.com/mysql-auto-increment-%E6%AD%B8%E9%9B%B6%E5%92%8C%E9%87%8D%E6%96%B0%E8%A8%88%E7%AE%97-a427ca3d56eb
+
+// 通過使用三個雙引號"""將SQL語句括起來，可以在多行中編寫SQL，而不需要使用字符串拼接
+// https://blog.51cto.com/u_16213410/7655208
