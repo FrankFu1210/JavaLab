@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -48,6 +49,14 @@ public class JDBC04 {
 			try (Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/cool",prop);){
 			
+			// 老師寫的
+			Statement stmt = conn.createStatement();
+			//砍全部
+			stmt.executeUpdate("DELETE FROM food");
+			//歸0 ALTER表執行改造
+			stmt.executeUpdate("ALTER TABLE food AUTO_INCREMENT=1");
+			
+			// 下面自己寫的:)
 			String sql2 = """
 							DELETE FROM food;
 							""";
@@ -55,6 +64,7 @@ public class JDBC04 {
 			pstmt2.executeUpdate();
 			System.out.println("OK");
 			
+			//ALTER表執行改造
 			String sql3 = """
 							ALTER TABLE food AUTO_INCREMENT=1;
 							""";
@@ -112,3 +122,5 @@ public class JDBC04 {
 
 // 通過使用三個雙引號"""將SQL語句括起來，可以在多行中編寫SQL，而不需要使用字符串拼接
 // https://blog.51cto.com/u_16213410/7655208
+
+// 開發時期不要做foreign key，開發後固定再連結
