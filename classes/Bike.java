@@ -1,23 +1,20 @@
 package tw.frank.classes;
 
-//設計觀念
-//public公開宣告 class類別 Bike物件
-public class Bike { //沒寫的話，爸爸為extends Object天公單一繼承
+import java.io.Serializable;
 
-	//double浮點數型態 speed屬性
-//	public double speed; //*寫上在意的屬性，腳踏車設計大公開*	
-	public double speed = 5; //*設定速度=5*
+public class Bike extends Object implements Serializable { //沒寫的話，爸爸為extends Object天公單一繼承
+//	設計觀念
+	public double speed; //寫上在意的屬性，腳踏車設計大公開	
 //	private double speed; //改為private，範圍僅限本類別!!
-//	speed = 5; //speed重複，屬性值直接寫在型態屬性上
+//	protected double speed; //改為保護級，富類別讓繼承的子類別拿去運用 (不在相同package也可以用)
 	
-	//void空類型，不用回傳值，保持對class類別的引用 upSpeed()方法
-//	public void upSpeed() { //*upSpeed原本()沒寫給Bike*
-	public void upSpeed(int args) {//*upSpeed因為繼承給Scooter，為了設定參數方法因此給()中加入參數*
-		speed = speed < 5 ? 5 : speed * 1.4;
+	public void upSpeed() { //upSpeed原本()沒寫給Bike
+//	public void upSpeed(int args) {//upSpeed因為繼承給Scooter，為了設定參數方法因此給()中加入參數
+		speed = speed < 1 ? 1 : speed * 1.4;
 	}
 	
 	public void downSpeed() {
-		speed = speed < 18 ? 18 : speed * 0.5;
+		speed = speed < 1 ? 0 : speed * 0.5;
 	}
 	
 //	公開值，不是變數，屬性不太會對外公開，透過方法來取得到
